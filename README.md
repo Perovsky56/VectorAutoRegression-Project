@@ -6,16 +6,16 @@ These data are sourced from the government website https://www.gov.pl/web/archiw
 
 # Tools used
 
-**Python:**
-  **pandas:**  for convenient manipulation and analysis of tabular data, such as DataFrames
-  **numpy:** for handling arrays and performing efficient mathematical and numerical operations
-  **matplotlib:** for creating aesthetic and transparent plots and data visualizations
-  **statsmodel:** for statistical and econometric modeling - essential for projects involving VAR
-  **sklearn.metrics:** providing model evaluation metrics, such as accuracy, precision, and regression measures
-**Jupyter Notebooks:** an environment for writing and running Python code, combining code, visualizations, and rich text in a single document
-**Git & GitHub:** essential for version control and sharing code, ensuring collaboration and project tracking
-**Excel:** a spreadsheet application for organizing and analyzing data
-**Overleaf:** an online LaTeX editor that allows writing, editing, and compiling of LaTeX documents in real-time, with no need for local installations
+- **Python:**
+  - **pandas:**  for convenient manipulation and analysis of tabular data, such as DataFrames
+  - **numpy:** for handling arrays and performing efficient mathematical and numerical operations
+  - **matplotlib:** for creating aesthetic and transparent plots and data visualizations
+  - **statsmodel:** for statistical and econometric modeling - essential for projects involving VAR
+  - **sklearn.metrics:** providing model evaluation metrics, such as accuracy, precision, and regression measures
+- **Jupyter Notebooks:** an environment for writing and running Python code, combining code, visualizations, and rich text in a single document
+- **Git & GitHub:** essential for version control and sharing code, ensuring collaboration and project tracking
+- **Excel:** a spreadsheet application for organizing and analyzing data
+- **Overleaf:** an online LaTeX editor that allows writing, editing, and compiling of LaTeX documents in real-time, with no need for local installations
 
 # Dataset overview
 
@@ -93,15 +93,15 @@ A Vector Autoregression (VAR) model was employed using the ‘statsmodels‘ lib
 The maximum number of lags considered was 50, ensuring that the model captures the temporal dependencies adequately
 
 During testing, it was deduced that features containing information on total radiation intensity should be discarded, among other reasons:
--frequent empty values in the database,
--the too little influence on the prediction of other features.
+- frequent empty values in the database,
+- the too little influence on the prediction of other features.
 This also effectively affected the cost of the model and the time it took to make predictions.
 
 Any columns containing time information were also not included in the features selected to make predictions.
 
 ## Stationarity
 
-Stationarity (stationarity) refers to the property of a time series that remains constant over time in terms of its statistical properties. This is a key condition in time series analysis.
+**Stationarity** refers to the property of a time series that remains constant over time in terms of its statistical properties. This is a key condition in time series analysis.
 
 A stochastic process is stationary if its key statistics (such as mean, variance and autocorrelation) do not change over time. So, **no seasonality and no trend are noticeable**.
 
