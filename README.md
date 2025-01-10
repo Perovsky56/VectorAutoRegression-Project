@@ -4,6 +4,7 @@ This project focuses on the use of the VectorAutoRegression (VAR) model to forec
 
 These data are sourced from the government website https://www.gov.pl/web/archiwum-inwestycje-rozwoj/dane-do-obliczen-energetycznych-budynkow
 
+
 # Tools used
 
 - **Python:**
@@ -17,6 +18,7 @@ These data are sourced from the government website https://www.gov.pl/web/archiw
 - **Excel:** a spreadsheet application for organizing and analyzing data
 - **Overleaf:** an online LaTeX editor that allows writing, editing, and compiling of LaTeX documents in real-time, with no need for local installations
 
+
 # Dataset overview
 
 ## Meteorological stations
@@ -25,6 +27,7 @@ The data source includes a long list of meteorological stations across the Polis
 The selection took into account the distance between the various stations so that they could be far apart, as well as the quality of the data that specific sets have - including whether they contain all the desired features, whether they do not have many NaN values, and whether the data are collected for a large number of years.
 
 Selected cities and meteorological stations were: Kołobrzeg, Opole and Warszawa(Okęcie).
+
 
 ## Features
 Databases for each station include the following features:
@@ -43,6 +46,7 @@ Databases for each station include the following features:
 - Sky radiation temperature (TSKY): Temperature of the sky as perceived by a radiometer, measured in degrees Celsius (°C),
 - Total solar radiation intensity per horizontal surface (direction N inclination 0º) (N_0) in (W/m²),
 - Total solar irradiance on surfaces with N, NE, E, SE, S, SW, W, NW orientation and inclination to horizontal 30º, 45º, 60º, 90º (N_30, NE_30, ...) in (W/m²) which includes 32 features.
+
 
 # Dataset processing and cleaning
 
@@ -87,6 +91,7 @@ df['date'] = df['date'].dt.strftime('%m-%d %H:00')
 df.set_index('date', inplace=True)
 ```
 
+
 # Methodology
 
 A Vector Autoregression (VAR) model was employed using the ‘statsmodels‘ library. The model selection was based on the Akaike Information Criterion (AIC), which helps in selecting the model with the best fit by balancing the complexity and goodness of fit. 
@@ -98,6 +103,7 @@ During testing, it was deduced that features containing information on total rad
 This also effectively affected the cost of the model and the time it took to make predictions.
 
 Any columns containing time information were also not included in the features selected to make predictions.
+
 
 ## Stationarity
 
@@ -127,6 +133,7 @@ for column in selected_columns:
     plt.show()
 ```
 
+
 ### Two examples of AFD test performed on two features
 - Column featuring DBT (Dry bulb temperature)
 ![ADF_DBT](https://github.com/user-attachments/assets/8612cee1-7851-4e15-8a97-e3062c6f7a79)
@@ -144,3 +151,29 @@ For the DBT feature, the test value is -2.39, which, compared to the critical va
 For the WS feature, the test value is -9.15, which, compared to the critical values, is deep below the 1% threshold - this means more than 99 percent confidence that the **WS timeseries is stationary**.
 
 The graphs make it possible, using the eye test, to see that indeed dry bulb temperature shows a trend and seasonality, while wind speed is completely independent of the passage of time.
+
+
+## Calculations
+
+The calculations were performed using the VAR modelfrom ‘statsmodels‘. The analysis considered 5000 hours of the year, and the model was used to forecast the next 24 hours. This approach allows for understanding the shortterm dynamics and dependencies between the variables over a one-day horizon
+
+In a nutshell, the VAR statistical model involves making predictions that predict subsequent values of selected features, based on other variables. 
+It is important to find such features for the VAR model, that are related to others and have a strong correlation with them.
+
+
+## Evaluuation Metrics
+
+The prediction accuracy was evaluated by comparing the actual values of the next 24 hours with the forecasted values using the following metrics:
+-**Mean Squared Error (MSE):** This metric measures the average of the squares of the errors, indicating the average squared difference between the estimated values and the actual value,
+-**Mean Absolute Error (MAE):** This metric measures the average magnitude of the errors in a set of predictions, without considering their direction,
+-**R-squared (R²):** This metric represents the proportion of the variance for a dependent variable that’s explained by an independent variable or variables in a regression model
+
+# Results
+
+The results of the VAR model predictions for one selected city (Kołobrzeg) are presented in this section. The predictions include dry bulb temperature (DBT), relative humidity (RH), and wind speed(WS) for the next 24 hours, based on the previous 100 hours of data
+
+![kolobrzeg_DBT](https://github.com/user-attachments/assets/052795c7-6b0c-44bf-9b3d-47d19971663d)
+
+![kolobrzeg_RH](https://github.com/user-attachments/assets/8b74ae3d-28c6-42af-b1e0-9d4257863434)
+
+![kolobrzeg_WS](https://github.com/user-attachments/assets/6fe0f4e6-013f-4417-b624-e6a65a95a988)
