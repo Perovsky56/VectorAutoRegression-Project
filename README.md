@@ -91,6 +91,11 @@ df['date'] = df.apply(calculate_date, axis=1)
 df['date'] = df['date'].dt.strftime('%m-%d %H:00')
 df.set_index('date', inplace=True)
 ```
+For example, to for better understaing, lets select one of the features and visualize it.
+![kolobrzeg_DBTexample](https://github.com/user-attachments/assets/8a1ca178-1192-44f8-a30c-1bf09ed0e476)
+**The DBT feature stands for Dry Bulb Temperature**, and is expressed in degrees Celsius (seen on Y axis) - it simply means daytime temperature.
+On the graph we see a time period of 5000 hours with dates on the X axis.
+As you can see, the temperature is lowest in deep winter at the beginning of the year, then in spring it rises, and in summer Poland measures up to high heat. And the graph ends with summer, because, as said, in this case we take only 5000 hours.
 
 
 # Methodology
@@ -136,16 +141,38 @@ for column in selected_columns:
 
 
 ### Two examples of AFD test performed on two features
+
+Lets go back to the DBT feature and try the stationarity test on it.
+
 - Column featuring DBT (Dry bulb temperature)
 ![ADF_DBT](https://github.com/user-attachments/assets/8612cee1-7851-4e15-8a97-e3062c6f7a79)
+```python
+Testing DBT for stationarity:
+ADF Statistic: -2.379
+p-value: 0.1475
+Critical Values:
+1%:  -3.431
+5%:  -2.862
+10%: -2.567
+```
+Now, check another feature - let it be the WS, standing for wind speed. And then, lets compare them in meaning of stationarity
 
 - Column featuring WS (Wind speed)
-![ADF_WS](https://github.com/user-attachments/assets/f82b20dc-befc-48d7-82d5-733a8e0cad11)
+![kolobrzeg_WSexample](https://github.com/user-attachments/assets/b475c1ff-a621-47e2-b5de-d70f419d8ef9)
+```python
+Testing WS for stationarity:
+ADF Statistic: -9.156
+p-value: 2.5969e-15
+Critical Values:
+1%:  -3.43
+5%:  -2.862
+10%: -2.567
+```
 
 ### Insights
 The ADF test results for the DBT and WS timeseries were specifically chosen to show how they differ in terms of stationarity.
 
-The results of the ADF test should be compared with the critical values, which are the thresholds by which it is determined with how much certainty a time series can be determined stationary.
+The results of the ADF test should be compared with the critical values, which are the thresholds by which it is determined with how much certainty a timeseries can be determined stationary.
 
 For the DBT feature, the test value is -2.39, which, compared to the critical values, is above the 10% threshold (-2.39 > -2.57) - this means very low confidence that this time series is stationary. With this, it is inferred that **DBT timeseries is non-stationary**.
 
