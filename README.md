@@ -155,25 +155,72 @@ The graphs make it possible, using the eye test, to see that indeed dry bulb tem
 
 ## Calculations
 
-The calculations were performed using the VAR modelfrom ‘statsmodels‘. The analysis considered 5000 hours of the year, and the model was used to forecast the next 24 hours. This approach allows for understanding the shortterm dynamics and dependencies between the variables over a one-day horizon
+The calculations were performed using the VAR modelfrom ‘statsmodels‘. The analysis considered 5000 hours of the year, and the model was used to forecast the next 24 hours. This approach allows for understanding the shortterm dynamics and dependencies between the variables over a one-day horizon
 
-In a nutshell, the VAR statistical model involves making predictions that predict subsequent values of selected features, based on other variables. 
-It is important to find such features for the VAR model, that are related to others and have a strong correlation with them.
+In the VAR (Vector Autoregressive) model, each feature in the system is described as a function of its past values (lagged observations) and the past values of other features. This means that the variables are not treated as independent, but as interrelated over time, and their changes affect each other.
 
-
-## Evaluuation Metrics
+## Evaluation Metrics
 
 The prediction accuracy was evaluated by comparing the actual values of the next 24 hours with the forecasted values using the following metrics:
--**Mean Squared Error (MSE):** This metric measures the average of the squares of the errors, indicating the average squared difference between the estimated values and the actual value,
--**Mean Absolute Error (MAE):** This metric measures the average magnitude of the errors in a set of predictions, without considering their direction,
--**R-squared (R²):** This metric represents the proportion of the variance for a dependent variable that’s explained by an independent variable or variables in a regression model
+- **Mean Squared Error (MSE):** This metric measures the average of the squares of the errors, indicating the average squared difference between the estimated values and the actual value,
+- **Mean Absolute Error (MAE):** This metric measures the average magnitude of the errors in a set of predictions, without considering their direction,
+- **R-squared (R²):** This metric represents the proportion of the variance for a dependent variable that’s explained by an independent variable or variables in a regression model
 
 # Results
 
 The results of the VAR model predictions for one selected city (Kołobrzeg) are presented in this section. The predictions include dry bulb temperature (DBT), relative humidity (RH), and wind speed(WS) for the next 24 hours, based on the previous 100 hours of data
 
+In a nutshell, the VAR statistical model involves making predictions that predict subsequent values of selected features, based on other variables. 
+It is important to find such features for the VAR model, that are related to others and have a strong correlation with them.
+
+***Correlation matrix of residuals***
+             DBT        RH        HR        WS        WD       ITH       IDH       ISH      TSKY
+DBT     1.000 -0.595  0.165  0.018 -0.024  0.104  0.031  0.092  0.370
+RH     -0.595  1.000  0.593 -0.011 -0.010 -0.095 -0.026 -0.086 -0.143
+HR      0.165  0.593  1.000  0.002 -0.032 -0.020 -0.015 -0.008  0.125
+WS      0.018 -0.011  0.002  1.000  0.095 -0.004  0.006 -0.011  0.046
+WD     -0.024 -0.010 -0.032  0.095  1.000  0.008  0.027 -0.021  0.010
+ITH     0.104 -0.095 -0.020 -0.004  0.008  1.000  0.631  0.511 -0.415
+IDH     0.031 -0.026 -0.015  0.006  0.027  0.631  1.000 -0.345 -0.263
+ISH     0.092 -0.086 -0.008 -0.011 -0.021  0.511 -0.345  1.000 -0.210
+TSKY    0.370 -0.143  0.125  0.046  0.010 -0.415 -0.264 -0.210  1.000
+
+**Evaluuation metrics matrix**
+  Column        MSE      MAE      R2
+0    DBT       4.79     1.55    0.69
+1     RH     127.97    10.24    0.67
+2     HR       1.48     1.07   -1.33
+3     WS       2.11     1.29    0.16
+4     WD     130.47    10.63   -0.06
+5    ITH    8602.91    67.68    0.92
+6    IDH   32323.88   111.52    0.55
+7    ISH    9158.39    63.84   -0.04
+8   TSKY      26.63     4.34   -4.09
+
+### Plots of forecasts for DBT, RH, WS
 ![kolobrzeg_DBT](https://github.com/user-attachments/assets/052795c7-6b0c-44bf-9b3d-47d19971663d)
 
 ![kolobrzeg_RH](https://github.com/user-attachments/assets/8b74ae3d-28c6-42af-b1e0-9d4257863434)
 
 ![kolobrzeg_WS](https://github.com/user-attachments/assets/6fe0f4e6-013f-4417-b624-e6a65a95a988)
+
+
+# Discussion of results
+
+The results indicate that the VAR model performs reasonably well in predicting dry bulb temperature (DBT) and relative humidity (RH) across all three cities. However, the predictions for wind speed (WS) are less accurate, which can be attributed to the smaller changes and fewer data points available for this variable
+
+In Kołobrzeg, the model achieved an R² of 0.69 for DBT and 0.67 for RH, indicating a good fit. However, the R² for WS was only 0.16, suggesting that the model struggled to capture the variability in wind speed.
+
+Overall, the VAR model demonstrated its capability to predict temperature and humidity with reasonable accuracy, but improvements are needed for wind speed predictions. The correlation matrices suggest that there are significant interdependencies between the variables, which the model partially captures.
+
+# Conclusions
+
+The VAR model’s ability to handle multiple interrelated time series variables simultaneously is one of its key strengths. In this study, the model was applied to a comprehensive dataset that included not only DBT, RH, and WS but also other meteorological parameters such as humidity ratio (HR), wind direction (WD), total solar radiation (ITH), direct solar radiation (IDH), diffuse solar radiation (ISH), and sky radiation temperature (TSKY). This extensive dataset allowed the VAR model to capture the complex dynamics and interactions between these variables, providing a robust framework for forecasting.
+
+An important aspect of the VAR model used in this study was its ability to automatically select the optimal number of lags (hours) to include in the prediction model. Although the model was initially set to consider up to 50 lags, it utilized the Akaike Information Criterion (AIC) to determine the most appropriate number of hours to look back for making accurate predictions. This adaptive feature ensured that the model was not overfitted and could generalize well to new data.
+
+The analysis showed that the VAR model requires a wide range of correlated features to improve prediction accuracy. The inclusion of multiple variables helps the model to better understand the underlying relationships and dependencies, leading to more accurate forecasts.
+
+Overall, the VAR model demonstrated its capability to predict temperature and humidity with reasonable accuracy, making it a valuable tool for building energy calculations. The model’s performance highlights the importance of having a wide range of correlated features to improve prediction accuracy. The VAR model requires a comprehensive dataset with multiple interrelated variables to fully capture the dynamics of the system. 
+
+Future work could focus on enhancing the model’s ability to predict wind speed by incorporating additional data or using more advanced modeling approaches. Additionally, addressing the issue of missing data in the dataset could further improve the model’s performance. Exploring other robust methods and integrating more features could also enhance the predictive power of the VAR model.
