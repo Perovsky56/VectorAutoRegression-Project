@@ -174,6 +174,7 @@ In a nutshell, the VAR statistical model involves making predictions that predic
 It is important to find such features for the VAR model, that are related to others and have a strong correlation with them.
 
 ***Correlation matrix of residuals***
+```python
              DBT        RH        HR        WS        WD       ITH       IDH       ISH      TSKY
 DBT     1.000 -0.595  0.165  0.018 -0.024  0.104  0.031  0.092  0.370
 RH     -0.595  1.000  0.593 -0.011 -0.010 -0.095 -0.026 -0.086 -0.143
@@ -184,6 +185,7 @@ ITH     0.104 -0.095 -0.020 -0.004  0.008  1.000  0.631  0.511 -0.415
 IDH     0.031 -0.026 -0.015  0.006  0.027  0.631  1.000 -0.345 -0.263
 ISH     0.092 -0.086 -0.008 -0.011 -0.021  0.511 -0.345  1.000 -0.210
 TSKY    0.370 -0.143  0.125  0.046  0.010 -0.415 -0.264 -0.210  1.000
+```
 
 **Evaluuation metrics matrix**
   Column        MSE      MAE      R2
