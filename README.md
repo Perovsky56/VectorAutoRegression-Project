@@ -8,13 +8,14 @@ These data are sourced from the government website https://www.gov.pl/web/archiw
 # Tools used
 
 - **Python:**
-  - **pandas:**  for convenient manipulation and analysis of tabular data, such as DataFrames
-  - **numpy:** for handling arrays and performing efficient mathematical and numerical operations
+  - **pandas:** for convenient manipulation and analysis of tabular data, such as DataFrames
+  - **numpy:** for handling arrays and performing efficient mathematical operations
   - **matplotlib:** for creating aesthetic and transparent plots and data visualizations
+  - **seaborn:** for creating even better aesthetic and transparent plots
   - **statsmodel:** for statistical and econometric modeling - essential for projects involving VAR
   - **sklearn.metrics:** providing model evaluation metrics, such as accuracy, precision, and regression measures
-- **Jupyter Notebooks:** an environment for writing and running Python code, combining code, visualizations, and rich text in a single document
-- **Git & GitHub:** essential for version control and sharing code, ensuring collaboration and project tracking
+- **Jupyter Notebooks:** an environment for writing and running Python code
+- **Git & GitHub:** essential for version control and sharing code
 - **Excel:** a spreadsheet application for organizing and analyzing data
 - **Overleaf:** an online LaTeX editor that allows writing, editing, and compiling of LaTeX documents in real-time, with no need for local installations
 
@@ -175,7 +176,7 @@ It is important to find such features for the VAR model, that are related to oth
 
 ***Correlation matrix of residuals***
 ```python
-             DBT        RH        HR        WS        WD       ITH       IDH       ISH      TSKY
+          DBT     RH     HR     WS     WD    ITH    IDH    ISH   TSKY
 DBT     1.000 -0.595  0.165  0.018 -0.024  0.104  0.031  0.092  0.370
 RH     -0.595  1.000  0.593 -0.011 -0.010 -0.095 -0.026 -0.086 -0.143
 HR      0.165  0.593  1.000  0.002 -0.032 -0.020 -0.015 -0.008  0.125
@@ -188,16 +189,18 @@ TSKY    0.370 -0.143  0.125  0.046  0.010 -0.415 -0.264 -0.210  1.000
 ```
 
 **Evaluuation metrics matrix**
-  Column        MSE      MAE      R2
-0    DBT       4.79     1.55    0.69
-1     RH     127.97    10.24    0.67
-2     HR       1.48     1.07   -1.33
-3     WS       2.11     1.29    0.16
-4     WD     130.47    10.63   -0.06
-5    ITH    8602.91    67.68    0.92
-6    IDH   32323.88   111.52    0.55
-7    ISH    9158.39    63.84   -0.04
-8   TSKY      26.63     4.34   -4.09
+```python
+Column     MSE      MAE      R2
+DBT       4.79     1.55    0.69
+RH      127.97    10.24    0.67
+HR        1.48     1.07   -1.33
+WS        2.11     1.29    0.16
+WD      130.47    10.63   -0.06
+ITH    8602.91    67.68    0.92
+IDH   32323.88   111.52    0.55
+ISH    9158.39    63.84   -0.04
+TSKY     26.63     4.34   -4.09
+```
 
 ### Plots of forecasts for DBT, RH, WS
 ![kolobrzeg_DBT](https://github.com/user-attachments/assets/052795c7-6b0c-44bf-9b3d-47d19971663d)
@@ -217,12 +220,10 @@ Overall, the VAR model demonstrated its capability to predict temperature and hu
 
 # Conclusions
 
-The VAR model’s ability to handle multiple interrelated time series variables simultaneously is one of its key strengths. In this study, the model was applied to a comprehensive dataset that included not only DBT, RH, and WS but also other meteorological parameters such as humidity ratio (HR), wind direction (WD), total solar radiation (ITH), direct solar radiation (IDH), diffuse solar radiation (ISH), and sky radiation temperature (TSKY). This extensive dataset allowed the VAR model to capture the complex dynamics and interactions between these variables, providing a robust framework for forecasting.
+The VAR model’s ability to handle multiple interrelated time series variables is a key strength. In this study, it was applied to a comprehensive dataset that included dry bulb temperature (DBT), relative humidity (RH), wind speed (WS), humidity ratio (HR), wind direction (WD), total solar radiation (ITH), direct solar radiation (IDH), diffuse solar radiation (ISH), and sky radiation temperature (TSKY). This extensive dataset enabled the model to capture complex interactions and dynamics, providing a robust framework for forecasting.
 
-An important aspect of the VAR model used in this study was its ability to automatically select the optimal number of lags (hours) to include in the prediction model. Although the model was initially set to consider up to 50 lags, it utilized the Akaike Information Criterion (AIC) to determine the most appropriate number of hours to look back for making accurate predictions. This adaptive feature ensured that the model was not overfitted and could generalize well to new data.
+An important feature of the VAR model was its ability to automatically determine the optimal number of lags (hours) for predictions using the Akaike Information Criterion (AIC). While the model initially considered up to 50 lags, AIC ensured accurate predictions without overfitting by selecting the most relevant time horizons.
 
-The analysis showed that the VAR model requires a wide range of correlated features to improve prediction accuracy. The inclusion of multiple variables helps the model to better understand the underlying relationships and dependencies, leading to more accurate forecasts.
-
-Overall, the VAR model demonstrated its capability to predict temperature and humidity with reasonable accuracy, making it a valuable tool for building energy calculations. The model’s performance highlights the importance of having a wide range of correlated features to improve prediction accuracy. The VAR model requires a comprehensive dataset with multiple interrelated variables to fully capture the dynamics of the system. 
+The analysis showed that including a broad range of correlated features significantly improved prediction accuracy by revealing underlying dependencies. The VAR model effectively predicted temperature and humidity, demonstrating its utility for building energy calculations and highlighting the importance of comprehensive datasets with interrelated variables.
 
 Future work could focus on enhancing the model’s ability to predict wind speed by incorporating additional data or using more advanced modeling approaches. Additionally, addressing the issue of missing data in the dataset could further improve the model’s performance. Exploring other robust methods and integrating more features could also enhance the predictive power of the VAR model.
