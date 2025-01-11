@@ -145,7 +145,7 @@ for column in selected_columns:
 Lets go back to the DBT feature and try the stationarity test on it.
 
 - Column featuring DBT (Dry bulb temperature)
-![ADF_DBT](https://github.com/user-attachments/assets/8612cee1-7851-4e15-8a97-e3062c6f7a79)
+![kolobrzeg_DBTexample](https://github.com/user-attachments/assets/11288149-8d0e-4159-a3ab-454e0ce038f4)
 ```python
 Testing DBT for stationarity:
 ADF Statistic: -2.379
